@@ -1,0 +1,154 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2020-04-09T08:21:14.570Z",
+        "line": 3,
+        "name": "TC-001 create a new user credentials",
+        "description": "",
+        "id": "signup-and-purchase-product;tc-001-create-a-new-user-credentials",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 12783000000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "I am on the home page",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.i_am_on_the_home_page()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 4165000000,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Navigate to SignUp page",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.navigate_to_SignUp_page()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 17024000000,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "create an account with random username",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.craete_an_account_with_random_username()"
+            },
+            "keyword": "And "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2020-04-09T08:21:48.627Z",
+        "line": 8,
+        "name": "TC-002 Sign In with newly created user credentials",
+        "description": "",
+        "id": "signup-and-purchase-product;tc-002-sign-in-with-newly-created-user-credentials",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 68000000,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "I am on the Sign In Page",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.i_am_on_the_Sign_In_Page()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2235000000,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "Login using newly created credentials",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.login_in_using_newly_created_credentials()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 40000000,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "I shall see Product page with successful login",
+            "match": {
+              "location": "zuhlke.stepDefinations.SignUpAndSignIn.i_shall_see_Product_page_with_successful_login()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2020-04-09T08:21:50.975Z",
+        "line": 13,
+        "name": "TC-003 Add product to Online Cart and checkout",
+        "description": "",
+        "id": "signup-and-purchase-product;tc-003-add-product-to-online-cart-and-checkout",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 27000000,
+              "status": "passed"
+            },
+            "line": 14,
+            "name": "I am on the product home page",
+            "match": {
+              "location": "zuhlke.stepDefinations.BuyProduct.i_am_on_the_product_home_page()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 18938000000,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "I add product to cart and checkout",
+            "match": {
+              "location": "zuhlke.stepDefinations.BuyProduct.i_add_product_to_cart_and_checkout()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 15121000000,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "I shall be able to Buy the product",
+            "match": {
+              "location": "zuhlke.stepDefinations.BuyProduct.i_shall_be_able_to_Buy_the_product()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "SignUp and Purchase Product",
+    "description": "",
+    "id": "signup-and-purchase-product",
+    "keyword": "Feature",
+    "uri": "classpath:features/SignupAndPurchase.feature",
+    "tags": []
+  }
+]
