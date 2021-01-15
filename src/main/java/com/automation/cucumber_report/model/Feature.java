@@ -41,28 +41,18 @@ public class Feature implements EntityInterface {
     @Column(name = "line")
     private Integer featureLineNumber;
 
-    public void setScenarios(List<Scenario> scenarios) {
-        this.scenarios = scenarios;
-        this.scenarios.forEach(x-> x.setFeature(this));
-    }
 
     @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Scenario> scenarios;
 
-    public void addScenarios(Scenario scenario) {
-        if (scenarios == null) {
-            scenarios = new ArrayList<Scenario>();
-        }
-        scenarios.add(scenario);
-        scenario.setFeature(this);
-    }
+    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Tag> tags;
 
-
-
-//    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL)
-//    private List<Tag> tags;
+    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Result> results;
 
     @Column(name = "status")
     private String featureStatus;
@@ -74,22 +64,17 @@ public class Feature implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    //private Status featureStatus;
-
-    public static Feature createFeature(List<Scenario> scenarios ,
-                                        List<Tag> tags,String featureDescription,
+    public static Feature createFeature(String featureDescription,
                                         String featureKeyWord,
                                         Integer featureLineNumber,
                                         Long duration,
                                         String featureName,
                                         String featureStatus,
                                         String uri ){
-         return build(scenarios,tags,featureDescription,featureKeyWord,featureLineNumber,duration,featureName,featureStatus,uri);
+         return build(featureDescription,featureKeyWord,featureLineNumber,duration,featureName,featureStatus,uri);
     }
 
     private static Feature build(
-            List<Scenario> scenarios,
-            List<Tag> tags,
             String featureDescription,
             String featureKeyWord,
             Integer featureLineNumber,
@@ -104,11 +89,9 @@ public class Feature implements EntityInterface {
                 .featureLineNumber(featureLineNumber)
                 .duration(duration)
                 .featureName(featureName)
-                //.tags(tags)
                 .featureStatus(featureStatus)
                 .featureUri(uri)
                 .createdAt(Timestamp.from(Instant.now()))
-                .scenarios(scenarios)
                 .build();
     }
 }

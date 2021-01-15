@@ -45,6 +45,10 @@ public class Steps implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Embedding> embeddings;
 
+    @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Result> results;
+
 //    private final Argument[] arguments = new Argument[0];
 //    private final Match match = null;
 //    private final Output[] outputs = new Output[0];

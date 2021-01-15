@@ -24,29 +24,41 @@ public class Hook implements EntityInterface{
    // @Column(name = "hook_id")
     private Long id;
 
+    @Column(name = "result")
+    private String result;
+
+    @Column(name = "hook_type")
+    private String hookType;
+
 //    private Result result = null;
 //    private final Match match = null;
     //private List<Output> outputs
 
-    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    List<Embedding> embeddings;
+//    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    List<Embedding> embeddings;
 
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
     private Scenario scenario;
 
-    public static Hook createHook(List<Embedding> embeddings){
+    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Result> results;
 
-        return build(embeddings);
+    public static Hook createHook(Scenario scenario,String hookType,String result){
+
+        return build(scenario,hookType,result);
     }
-    private static Hook build(List<Embedding> embeddings){
+    private static Hook build(Scenario scenario,String hookType,String result){
         return Hook.builder()
-                .embeddings(embeddings)
+                .scenario(scenario)
+                .hookType(hookType)
+                .result(result)
                 .build();
     }
 

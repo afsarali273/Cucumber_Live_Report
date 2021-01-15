@@ -1,7 +1,9 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.codehaus.plexus.util.Base64;
@@ -15,6 +17,8 @@ import java.sql.Timestamp;
 @SuperBuilder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "embedding")
 public class Embedding implements EntityInterface{
 
@@ -40,17 +44,35 @@ public class Embedding implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "hook_entity_id")
-    Hook hook;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "hook_entity_id",nullable = true, updatable = true, insertable = true)
+//    Hook hook;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "step_entity_id")
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
     private Steps steps;
 
-    public static Embedding createEmbedding(String data,String fileId,String mimeType,String name){
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+    private Scenario scenario;
+
+    public static Embedding createEmbedding(Steps steps,String data,String fileId,String mimeType,String name){
 
         return Embedding.builder()
+                .steps(steps)
+                //.hook(hook)
+                .data(data)
+                .fileId(fileId)
+                .mimeType(mimeType)
+                .name(name)
+                .build();
+    }
+
+    public static Embedding createEmbedding(Hook hook,Scenario scenario,String data,String fileId,String mimeType,String name){
+
+        return Embedding.builder()
+                .scenario(scenario)
+                //.hook(hook)
                 .data(data)
                 .fileId(fileId)
                 .mimeType(mimeType)

@@ -25,21 +25,35 @@ public class Tag implements EntityInterface{
     @Column(name = "name")
     private String name;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
     private Scenario scenario;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "feature_entity_id")
-//    private Feature feature;
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
+    private Feature feature;
 
-    public static Tag createTags(String tagName){
+    public static Tag createTags(Scenario scenario,String type,String tagName){
         return Tag.builder()
                 .name(tagName)
+                .type(type)
+                .scenario(scenario)
+                .feature(scenario.getFeature())
+                .build();
+    }
+
+    public static Tag createTags(Feature feature,String type,String tagName){
+        return Tag.builder()
+                .name(tagName)
+                .type(type)
+                .feature(feature)
                 .build();
     }
 

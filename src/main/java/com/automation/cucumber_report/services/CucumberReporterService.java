@@ -6,7 +6,6 @@ import com.automation.cucumber_report.utils.Utils;
 import net.masterthought.cucumber.*;
 import net.masterthought.cucumber.json.Element;
 import net.masterthought.cucumber.json.Feature;
-import net.masterthought.cucumber.json.Row;
 import net.masterthought.cucumber.json.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +50,7 @@ public class CucumberReporterService {
 
         List<String> jsonFiles = new ArrayList<>();
         jsonFiles.add(System.getProperty("user.dir")+"/src/main/resources/cucumber.json");
+       // jsonFiles.add("/Users/a866716/Downloads/test_results 6/cucumber-reports/cucumber-6.json");
 
         String buildNumber = "1";
         String projectName = "cucumberProject";
@@ -82,18 +82,14 @@ public class CucumberReporterService {
 
         features.stream().forEach( feature -> {
 
-            List<Scenario> scenarios = new ArrayList<>();
-
-
             //Create
-            com.automation.cucumber_report.model.Feature feature1 = com.automation.cucumber_report.model.Feature.createFeature(scenarios,
-                    getTags(feature),
+            com.automation.cucumber_report.model.Feature feature1 = com.automation.cucumber_report.model.Feature.createFeature(
                     feature.getDescription(),
                     feature.getKeyword(),
                     feature.getLine(),
                     feature.getDuration(),
                     feature.getName(),
-                    feature.getStatus() == null ? "":feature.getStatus().getRawName(),
+                    feature.getStatus() == null ? "":feature.getStatus().getLabel(),
                     feature.getUri());
 
             //Create Scenario
@@ -101,26 +97,27 @@ public class CucumberReporterService {
 
                 //Steps
                 List<Steps> steps = new ArrayList<>();
-               // stepsRepo.saveAll(steps);
 
              Scenario scenario1=   Scenario.createScenario(feature1,Utils.checkIfNullReturnEmpty(scenario.getBeforeStatus() == null ? "":scenario.getBeforeStatus().getRawName()),
                         Utils.checkIfNullReturnEmpty(scenario.getAfterStatus() == null ? "": scenario.getAfterStatus().getRawName()),
                         scenario.getDuration(),
-                        getHooks(scenario),
                         Utils.checkIfNullReturnEmpty(scenario.getKeyword()),
                         scenario.getLine(),
                         Utils.checkIfNullReturnEmpty(scenario.getDescription()),
                         Utils.checkIfNullReturnEmpty(scenario.getName()),
                         Utils.checkIfNullReturnEmpty(scenario.getStatus() == null ? "":scenario.getStatus().getRawName()),
                         scenario.getStartTime(),
-                        steps,
                         Utils.checkIfNullReturnEmpty(scenario.getStepsStatus() == null ? "":scenario.getStepsStatus().getRawName()),
-                        getTags(scenario),
                         Utils.checkIfNullReturnEmpty(scenario.getType()));
 
+               getTags(scenario1,scenario);
+               getHooks(scenario1,scenario);
                getStepsList(scenario1,scenario);
+
+
             });
             //scenarioRepo.saveAll(scenarios);
+            getTags(feature1,feature);
             featureList.add(feature1);
         });
         featureRepo.saveAll(featureList);
@@ -143,57 +140,61 @@ public class CucumberReporterService {
                 step.getLine(),
                Utils.checkIfNullReturnEmpty(step.getName()),
                 getResult(step),
-                getEmbedding(step),
-                getRows(step));
-       stepsRepo.save(steps);
+                null,
+                null);
+        getRows(steps,step);
+      // stepsRepo.save(steps);
+        getEmbedding(steps,step);
         return steps;
     }
 
-    public  List<Embedding> getEmbedding(Step step){
+    public  List<Embedding> getEmbedding(Steps steps,Step step){
         List<Embedding> embeddingList = new ArrayList<>();
         Arrays.asList(step.getEmbeddings()).stream().forEach(embedding -> {
-            embeddingList.add(Embedding.createEmbedding(Utils.checkIfNullReturnEmpty(embedding.getData()),Utils.checkIfNullReturnEmpty(embedding.getFileId()),Utils.checkIfNullReturnEmpty(embedding.getMimeType()),Utils.checkIfNullReturnEmpty(embedding.getName())));
+            Embedding.createEmbedding(steps,Utils.checkIfNullReturnEmpty(embedding.getData()),Utils.checkIfNullReturnEmpty(embedding.getFileId()),Utils.checkIfNullReturnEmpty(embedding.getMimeType()),Utils.checkIfNullReturnEmpty(embedding.getName()));
         });
-        embeddingRepo.saveAll(embeddingList);
+        //embeddingRepo.saveAll(embeddingList);
        return embeddingList;
     }
 
-    public List<Embedding> getEmbeddingBefore(Element scenario){
+    public List<Embedding> getEmbeddingBefore(Scenario scenario1,Element scenario,Hook hook){
         List<Embedding> embeddingList = new ArrayList<>();
         Arrays.asList(scenario.getBefore()).stream().forEach(beforeScenario -> {
             Arrays.stream(beforeScenario.getEmbeddings()).forEach(embedding -> {
-                embeddingList.add(Embedding.createEmbedding(embedding.getData(),embedding.getFileId(),embedding.getMimeType(),embedding.getName()));
+               Embedding.createEmbedding(hook,scenario1,embedding.getData(),embedding.getFileId(),embedding.getMimeType(),embedding.getName());
+
             });
-            embeddingRepo.saveAll(embeddingList);
+            //embeddingRepo.saveAll(embeddingList);
         });
         return embeddingList;
     }
 
-    public List<Embedding> getEmbeddingAfter(Element scenario){
+    public List<Embedding> getEmbeddingAfter(Scenario scenario1,Hook hook,Element scenario){
         List<Embedding> embeddingList = new ArrayList<>();
         Arrays.asList(scenario.getAfter()).stream().forEach(afterScenario -> {
             Arrays.stream(afterScenario.getEmbeddings()).forEach(embedding -> {
-                embeddingList.add(Embedding.createEmbedding(Utils.checkIfNullReturnEmpty(embedding.getData()),Utils.checkIfNullReturnEmpty(embedding.getFileId()),Utils.checkIfNullReturnEmpty(embedding.getMimeType()),Utils.checkIfNullReturnEmpty(embedding.getName())));
+                Embedding.createEmbedding(hook,scenario1,Utils.checkIfNullReturnEmpty(embedding.getData()),Utils.checkIfNullReturnEmpty(embedding.getFileId()),Utils.checkIfNullReturnEmpty(embedding.getMimeType()),Utils.checkIfNullReturnEmpty(embedding.getName()));
             });
         });
     embeddingRepo.saveAll(embeddingList);
         return embeddingList;
     }
 
-    public  List<com.automation.cucumber_report.model.Row> getRows(Step step){
+    public  List<com.automation.cucumber_report.model.Row> getRows(Steps steps,Step step){
         List<com.automation.cucumber_report.model.Row> rowList = new ArrayList<>();
         Arrays.asList(step.getRows()).stream().forEach(row -> {
-           List<Cell> cellList =  getCells(row);
-            rowList.add(com.automation.cucumber_report.model.Row.createRow(cellList));
+          Row row1 = com.automation.cucumber_report.model.Row.createRow(steps,null);
+          getCells(row1,row);
         });
-        rowRepo.saveAll(rowList);
+        //rowRepo.saveAll(rowList);
         return rowList;
     }
 
-    public  List<Cell> getCells(Row row){
+    public  List<Cell> getCells(Row rows, net.masterthought.cucumber.json.Row row){
         List<Cell> cellList = new ArrayList<>();
-        Arrays.asList(row.getCells()).stream().forEach(cell->{
-            cellList.add(Cell.createCell(Utils.checkIfNullReturnEmpty(cell)));
+        Arrays.asList(row.getCells()).stream().forEach(cells->{
+
+            cellList.add(Cell.createCell(rows,Utils.checkIfNullReturnEmpty(cells)));
         });
         cellRepo.saveAll(cellList);
         return cellList;
@@ -207,37 +208,45 @@ public class CucumberReporterService {
     }
 
 
-    public List<Tag> getTags(Element scenario){
+    public List<Tag> getTags(Scenario scenario1, Element scenario){
 
         List<Tag> tagList = new ArrayList<>();
         Arrays.asList(scenario.getTags()).stream().forEach(tag -> {
-            tagList.add(Tag.createTags(Utils.checkIfNullReturnEmpty(tag.getFileName())));
+            tagList.add(Tag.createTags(scenario1,"Scenario",Utils.checkIfNullReturnEmpty(tag.getName())));
         });
         tagRepo.saveAll(tagList);
         return tagList;
     }
 
-    public List<Tag> getTags(Feature feature){
+    public List<Tag> getTags(com.automation.cucumber_report.model.Feature feature1,Feature feature){
 
         List<Tag> tagList = new ArrayList<>();
         Arrays.asList(feature.getTags()).stream().forEach(tag -> {
-            tagList.add(Tag.createTags(Utils.checkIfNullReturnEmpty(tag.getFileName())));
+            tagList.add(Tag.createTags(feature1,"Feature",Utils.checkIfNullReturnEmpty(tag.getName())));
         });
         tagRepo.saveAll(tagList);
         return tagList;
     }
 
-    public List<Hook> getHooks(Element scenario){
+    public List<Hook> getHooks(Scenario scenarios,Element scenario){
 
         List<Hook> hookList = new ArrayList<>();
         Arrays.asList(scenario.getBefore()).stream().forEach(hook -> {
 
-//            hook.getResult();
-//            hook.getResult();
+            Hook.createHook(scenarios,"BeforeScenario",Utils.checkIfNullReturnEmpty(hook.getResult().getStatus().getRawName()));
+
+          //  getEmbeddingBefore(scenarios,scenario,hook1);
 //            hook.getEmbeddings();
-            hookList.add(Hook.createHook(getEmbeddingAfter(scenario)));
+           // hookList.add(Hook.createHook(getEmbeddingAfter(scenario)));
         });
-        hookRepo.saveAll(hookList);
+
+        Arrays.asList(scenario.getAfter()).stream().forEach(hook -> {
+            Hook.createHook(scenarios,"AfterScenario",Utils.checkIfNullReturnEmpty(hook.getResult().getStatus().getRawName()));
+
+        });
+
+
+       // hookRepo.saveAll(hookList);
         return hookList;
     }
 

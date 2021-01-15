@@ -59,6 +59,10 @@ public class Scenario implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Tag> tags;
 
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Result> results;
+
     @Column(name = "scenario_status")
     private String scenarioStatus;
 
@@ -82,34 +86,32 @@ public class Scenario implements EntityInterface {
     @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
     private Feature feature;
 
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Embedding> embeddings;
+
     public static Scenario createScenario(Feature feature,String beforeStatus,
                                           String afterStatus,
                                           Long duration,
-                                          List<Hook> hooks,
                                           String keyword,
                                           Integer scenarioLine,
                                           String scenarioDesc,
                                           String scenarioName,
                                           String status,
                                           LocalDateTime startTime,
-                                          List<Steps> steps,
                                           String stepsStatus,
-                                          List<Tag> scenarioLevelTags,
                                           String type) {
 
         return build(feature,beforeStatus,
                 afterStatus,
                 duration,
-                hooks,
                 keyword,
                 scenarioLine,
                 scenarioDesc,
                 scenarioName,
                 status,
                 startTime,
-                steps,
                 stepsStatus,
-                scenarioLevelTags,
                 type);
     }
 
@@ -118,16 +120,13 @@ public class Scenario implements EntityInterface {
             String beforeStatus,
             String afterStatus,
             Long duration,
-            List<Hook> hooks,
             String keyword,
             Integer scenarioLine,
             String scenarioDesc,
             String scenarioName,
             String status,
             LocalDateTime startTime,
-            List<Steps> steps,
             String stepsStatus,
-            List<Tag> scenarioLevelTags,
             String type
     ) {
 
@@ -137,16 +136,13 @@ public class Scenario implements EntityInterface {
                 .beforeStatus(beforeStatus)
                 .createdAt(Timestamp.from(Instant.now()))
                 .duration(duration)
-                .hooks(hooks)
                 .keyword(keyword)
                 .line(scenarioLine)
                 .scenarioDescriptions(scenarioDesc)
                 .scenarioName(scenarioName)
                 .scenarioStatus(status)
                 .startTime(startTime)
-                .steps(steps)
                 .stepsStatus(stepsStatus)
-                .tags(scenarioLevelTags)
                 .type(type)
                 .build();
     }

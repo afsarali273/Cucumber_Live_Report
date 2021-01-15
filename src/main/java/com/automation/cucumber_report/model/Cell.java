@@ -29,12 +29,12 @@ public class Cell implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "row_entity_id",nullable = true, updatable = true, insertable = true)
     Row row;
 
-    public static Cell createCell(String cellsValue){
-        return Cell.builder().cells(cellsValue).build();
+    public static Cell createCell(Row row,String cellsValue){
+        return Cell.builder().row(row).cells(cellsValue).build();
 
     }
 }
