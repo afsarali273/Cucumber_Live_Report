@@ -1,6 +1,8 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.codehaus.plexus.util.Base64;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +13,8 @@ import java.sql.Timestamp;
 
 @Entity
 @SuperBuilder
+@Setter
+@Getter
 @Table(name = "embedding")
 public class Embedding implements EntityInterface{
 
@@ -36,11 +40,11 @@ public class Embedding implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "hook_entity_id")
     Hook hook;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "step_entity_id")
     private Steps steps;
 

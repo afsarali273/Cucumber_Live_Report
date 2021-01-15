@@ -1,6 +1,10 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,6 +16,10 @@ import java.util.List;
 
 @Entity
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @Table(name = "scenario")
 public class Scenario implements EntityInterface {
 
@@ -47,9 +55,9 @@ public class Scenario implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Steps> steps;
 
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Tag> tags;
+//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Tag> tags;
 
     @Column(name = "scenario_status")
     private String scenarioStatus;
@@ -70,8 +78,8 @@ public class Scenario implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "feature_entity_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
     private Feature feature;
 
     public static Scenario createScenario(String beforeStatus,
@@ -136,7 +144,7 @@ public class Scenario implements EntityInterface {
                 .startTime(startTime)
                 .steps(steps)
                 .stepsStatus(stepsStatus)
-                .tags(scenarioLevelTags)
+               // .tags(scenarioLevelTags)
                 .type(type)
                 .build();
     }

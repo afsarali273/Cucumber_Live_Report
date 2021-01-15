@@ -91,7 +91,7 @@ public class CucumberReporterService {
 
                 //Steps
               List<Steps> steps = getStepsList(scenario);
-                stepsRepo.saveAll(steps);
+               // stepsRepo.saveAll(steps);
                 scenarios.add(Scenario.createScenario(Utils.checkIfNullReturnEmpty(scenario.getBeforeStatus() == null ? "":scenario.getBeforeStatus().getRawName()),
                         Utils.checkIfNullReturnEmpty(scenario.getAfterStatus() == null ? "": scenario.getAfterStatus().getRawName()),
                         scenario.getDuration(),
@@ -107,7 +107,7 @@ public class CucumberReporterService {
                         getTags(scenario),
                         Utils.checkIfNullReturnEmpty(scenario.getType())));
             });
-            scenarioRepo.saveAll(scenarios);
+            //scenarioRepo.saveAll(scenarios);
 
             //Create
             featureList.add(com.automation.cucumber_report.model.Feature.createFeature(scenarios,

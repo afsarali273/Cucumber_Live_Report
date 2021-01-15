@@ -1,6 +1,8 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Entity
 @SuperBuilder
+@Setter
+@Getter
 @Table(name = "datatable_rows")
 public class Row implements EntityInterface{
 
@@ -23,8 +27,8 @@ public class Row implements EntityInterface{
             cascade = CascadeType.ALL)
     private List<Cell> cells;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "step_entity_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
     private Steps steps;
 
     @Column(name = "created_at")

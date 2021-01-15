@@ -1,7 +1,7 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,17 +9,22 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @Table(name = "feature")
 public class Feature implements EntityInterface {
 
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "name")
     private String featureName;
@@ -36,13 +41,28 @@ public class Feature implements EntityInterface {
     @Column(name = "line")
     private Integer featureLineNumber;
 
+    public void setScenarios(List<Scenario> scenarios) {
+        this.scenarios = scenarios;
+        this.scenarios.forEach(x-> x.setFeature(this));
+    }
+
     @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Scenario> scenarios;
 
-    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Tag> tags;
+    public void addScenarios(Scenario scenario) {
+        if (scenarios == null) {
+            scenarios = new ArrayList<Scenario>();
+        }
+        scenarios.add(scenario);
+        scenario.setFeature(this);
+    }
+
+
+
+//    @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Tag> tags;
 
     @Column(name = "status")
     private String featureStatus;
@@ -84,7 +104,7 @@ public class Feature implements EntityInterface {
                 .featureLineNumber(featureLineNumber)
                 .duration(duration)
                 .featureName(featureName)
-                .tags(tags)
+                //.tags(tags)
                 .featureStatus(featureStatus)
                 .featureUri(uri)
                 .createdAt(Timestamp.from(Instant.now()))

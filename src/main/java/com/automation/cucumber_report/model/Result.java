@@ -1,6 +1,8 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,6 +11,8 @@ import java.sql.Timestamp;
 
 @Entity
 @SuperBuilder
+@Setter
+@Getter
 @Table(name = "result")
 public class Result implements EntityInterface {
 
