@@ -18,7 +18,6 @@ public class TestRestController {
 
     @Autowired CucumberReporterService cucumberReporterService;
 
-
     @GetMapping
     public String check() throws NoSuchFieldException, IllegalAccessException {
         List<Feature> featureList = cucumberReporterService.getFeaturesList();
