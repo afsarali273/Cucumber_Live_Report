@@ -19,7 +19,7 @@ public class Cell implements EntityInterface{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cell_id")
+    //@Column(name = "cell_id")
     private Long id;
 
     @Column(name = "column_value")

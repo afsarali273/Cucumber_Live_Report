@@ -19,7 +19,7 @@ public class Tag implements EntityInterface{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
+    //@Column(name = "tag_id")
     private Long id;
 
     @Column(name = "name")
@@ -29,9 +29,9 @@ public class Tag implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "scenario_entity_id")
-//    private Scenario scenario;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+    private Scenario scenario;
 
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name = "feature_entity_id")

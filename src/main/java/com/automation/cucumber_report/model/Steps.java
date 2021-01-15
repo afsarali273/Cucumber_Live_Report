@@ -22,7 +22,7 @@ public class Steps implements EntityInterface {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "steps_id")
+   // @Column(name = "steps_id")
     private Long id;
 
     @Column(name = "name")
@@ -54,27 +54,28 @@ public class Steps implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
     private Scenario scenario;
 
-    public static Steps createStep(String keyword,
+    public static Steps createStep(Scenario scenario,String keyword,
                                    Integer lineNumber,
                                    String stepName,
                                    Result result,
                                    List<Embedding> embeddings,
                                    List<Row> rows) {
 
-        return build(keyword, lineNumber, stepName, result, embeddings, rows);
+        return build(scenario,keyword, lineNumber, stepName, result, embeddings, rows);
     }
 
-    private static Steps build(String keyword,
+    private static Steps build(Scenario scenario,String keyword,
                                Integer lineNumber,
                                String stepName,
                                Result result,
                                List<Embedding> embeddings,
                                List<Row> rows) {
         return Steps.builder()
+                .scenario(scenario)
                 .keyword(keyword)
                 .line(lineNumber)
                 .name(stepName)

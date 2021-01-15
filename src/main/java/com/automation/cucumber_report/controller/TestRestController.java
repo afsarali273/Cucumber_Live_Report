@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/test")
@@ -20,7 +21,7 @@ public class TestRestController {
 
     @GetMapping
     public String check() throws NoSuchFieldException, IllegalAccessException {
-        List<Feature> featureList = cucumberReporterService.getFeaturesList();
+        Set<Feature> featureList = cucumberReporterService.getFeaturesList();
 
     //  featureList.stream().forEach( x-> Arrays.stream(x.getElements()).count());
         return "Welcome Afsar";

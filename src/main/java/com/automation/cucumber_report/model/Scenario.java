@@ -26,7 +26,7 @@ public class Scenario implements EntityInterface {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scenario_id")
+    //@Column(name = "scenario_id")
     private Long id;
 
     @Column(name = "name")
@@ -55,9 +55,9 @@ public class Scenario implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Steps> steps;
 
-//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL)
-//    private List<Tag> tags;
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Tag> tags;
 
     @Column(name = "scenario_status")
     private String scenarioStatus;
@@ -78,11 +78,11 @@ public class Scenario implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
     private Feature feature;
 
-    public static Scenario createScenario(String beforeStatus,
+    public static Scenario createScenario(Feature feature,String beforeStatus,
                                           String afterStatus,
                                           Long duration,
                                           List<Hook> hooks,
@@ -97,7 +97,7 @@ public class Scenario implements EntityInterface {
                                           List<Tag> scenarioLevelTags,
                                           String type) {
 
-        return build(beforeStatus,
+        return build(feature,beforeStatus,
                 afterStatus,
                 duration,
                 hooks,
@@ -114,6 +114,7 @@ public class Scenario implements EntityInterface {
     }
 
     private static Scenario build(
+            Feature feature,
             String beforeStatus,
             String afterStatus,
             Long duration,
@@ -131,6 +132,7 @@ public class Scenario implements EntityInterface {
     ) {
 
         return Scenario.builder()
+                .feature(feature)
                 .afterStatus(afterStatus)
                 .beforeStatus(beforeStatus)
                 .createdAt(Timestamp.from(Instant.now()))
@@ -144,7 +146,7 @@ public class Scenario implements EntityInterface {
                 .startTime(startTime)
                 .steps(steps)
                 .stepsStatus(stepsStatus)
-               // .tags(scenarioLevelTags)
+                .tags(scenarioLevelTags)
                 .type(type)
                 .build();
     }

@@ -19,7 +19,7 @@ public class Result implements EntityInterface {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "result_id")
+    //@Column(name = "result_id")
     private Long id;
 
     @Column(name = "status")

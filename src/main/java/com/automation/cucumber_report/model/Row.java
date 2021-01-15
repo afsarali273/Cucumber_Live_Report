@@ -20,7 +20,7 @@ public class Row implements EntityInterface{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rows_id")
+    //@Column(name = "rows_id")
     private Long id;
 
     @OneToMany(mappedBy = "row", fetch = FetchType.LAZY,

@@ -9,14 +9,11 @@ import net.masterthought.cucumber.json.Feature;
 import net.masterthought.cucumber.json.Row;
 import net.masterthought.cucumber.json.Step;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CucumberReporterService {
@@ -50,7 +47,7 @@ public class CucumberReporterService {
 
 
 
-    public List<com.automation.cucumber_report.model.Feature> getFeaturesList() throws NoSuchFieldException, IllegalAccessException {
+    public Set<com.automation.cucumber_report.model.Feature> getFeaturesList() throws NoSuchFieldException, IllegalAccessException {
 
         List<String> jsonFiles = new ArrayList<>();
         jsonFiles.add(System.getProperty("user.dir")+"/src/main/resources/cucumber.json");
@@ -71,7 +68,7 @@ public class CucumberReporterService {
         ReportParser reportParser = (ReportParser) privateField.get(reportBuilder);
         List<Feature> features = reportParser.parseJsonFiles(jsonFiles);
 
-       List<com.automation.cucumber_report.model.Feature> featureList =  mapToDB(features);
+       Set<com.automation.cucumber_report.model.Feature> featureList =  mapToDB(features);
 
         System.out.println(featureList);
         return featureList;
@@ -79,20 +76,34 @@ public class CucumberReporterService {
     }
 
 
-    public List<com.automation.cucumber_report.model.Feature> mapToDB(List<Feature> features){
+    public Set<com.automation.cucumber_report.model.Feature> mapToDB(List<Feature> features){
 
-        List<com.automation.cucumber_report.model.Feature> featureList = new ArrayList<>();
+        Set<com.automation.cucumber_report.model.Feature> featureList = new HashSet<>();
 
         features.stream().forEach( feature -> {
 
             List<Scenario> scenarios = new ArrayList<>();
+
+
+            //Create
+            com.automation.cucumber_report.model.Feature feature1 = com.automation.cucumber_report.model.Feature.createFeature(scenarios,
+                    getTags(feature),
+                    feature.getDescription(),
+                    feature.getKeyword(),
+                    feature.getLine(),
+                    feature.getDuration(),
+                    feature.getName(),
+                    feature.getStatus() == null ? "":feature.getStatus().getRawName(),
+                    feature.getUri());
+
             //Create Scenario
             Arrays.asList(feature.getElements()).stream().forEach(scenario -> {
 
                 //Steps
-              List<Steps> steps = getStepsList(scenario);
+                List<Steps> steps = new ArrayList<>();
                // stepsRepo.saveAll(steps);
-                scenarios.add(Scenario.createScenario(Utils.checkIfNullReturnEmpty(scenario.getBeforeStatus() == null ? "":scenario.getBeforeStatus().getRawName()),
+
+             Scenario scenario1=   Scenario.createScenario(feature1,Utils.checkIfNullReturnEmpty(scenario.getBeforeStatus() == null ? "":scenario.getBeforeStatus().getRawName()),
                         Utils.checkIfNullReturnEmpty(scenario.getAfterStatus() == null ? "": scenario.getAfterStatus().getRawName()),
                         scenario.getDuration(),
                         getHooks(scenario),
@@ -105,38 +116,30 @@ public class CucumberReporterService {
                         steps,
                         Utils.checkIfNullReturnEmpty(scenario.getStepsStatus() == null ? "":scenario.getStepsStatus().getRawName()),
                         getTags(scenario),
-                        Utils.checkIfNullReturnEmpty(scenario.getType())));
+                        Utils.checkIfNullReturnEmpty(scenario.getType()));
+
+               getStepsList(scenario1,scenario);
             });
             //scenarioRepo.saveAll(scenarios);
-
-            //Create
-            featureList.add(com.automation.cucumber_report.model.Feature.createFeature(scenarios,
-                    getTags(feature),
-                    feature.getDescription(),
-                    feature.getKeyword(),
-                    feature.getLine(),
-                    feature.getDuration(),
-                    feature.getName(),
-                    feature.getStatus() == null ? "":feature.getStatus().getRawName(),
-                    feature.getUri()));
+            featureList.add(feature1);
         });
         featureRepo.saveAll(featureList);
     return featureList;
     }
 
 
-    public List<Steps> getStepsList(Element scenario){
+    public List<Steps> getStepsList(Scenario scenarios,Element scenario){
         List<Steps> stepsList = new ArrayList<>();
         Arrays.asList(scenario.getSteps()).stream().forEach( step -> {
 
-            stepsList.add(getStep(step));
+            stepsList.add(getStep(scenarios,step));
         });
         return stepsList;
     }
 
 
-    public  Steps getStep(Step step){
-       Steps steps =  Steps.createStep(Utils.checkIfNullReturnEmpty(step.getKeyword()),
+    public  Steps getStep(Scenario scenario,Step step){
+       Steps steps =  Steps.createStep(scenario,Utils.checkIfNullReturnEmpty(step.getKeyword()),
                 step.getLine(),
                Utils.checkIfNullReturnEmpty(step.getName()),
                 getResult(step),

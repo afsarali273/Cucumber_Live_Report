@@ -21,7 +21,7 @@ public class Hook implements EntityInterface{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hook_id")
+   // @Column(name = "hook_id")
     private Long id;
 
 //    private Result result = null;

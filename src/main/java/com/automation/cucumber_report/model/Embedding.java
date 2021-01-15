@@ -21,7 +21,7 @@ public class Embedding implements EntityInterface{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "embedding_id")
+    //@Column(name = "embedding_id")
     private Long id;
 
     @Column(name = "mime_type")
