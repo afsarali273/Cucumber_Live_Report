@@ -1,7 +1,9 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +17,8 @@ import java.util.List;
 @Entity
 @SuperBuilder
 @Table(name = "steps")
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 public class Steps implements EntityInterface {
@@ -34,8 +38,8 @@ public class Steps implements EntityInterface {
     @Column(name = "line")
     private Integer line;
 
-    @Column(name = "result")
-    private Result result;
+//    @Column(name = "result")
+//    private Result result;
 
     @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -64,28 +68,19 @@ public class Steps implements EntityInterface {
 
     public static Steps createStep(Scenario scenario,String keyword,
                                    Integer lineNumber,
-                                   String stepName,
-                                   Result result,
-                                   List<Embedding> embeddings,
-                                   List<Row> rows) {
+                                   String stepName) {
 
-        return build(scenario,keyword, lineNumber, stepName, result, embeddings, rows);
+        return build(scenario,keyword, lineNumber, stepName);
     }
 
     private static Steps build(Scenario scenario,String keyword,
                                Integer lineNumber,
-                               String stepName,
-                               Result result,
-                               List<Embedding> embeddings,
-                               List<Row> rows) {
+                               String stepName) {
         return Steps.builder()
                 .scenario(scenario)
                 .keyword(keyword)
                 .line(lineNumber)
                 .name(stepName)
-                .result(result)
-                .embeddings(embeddings)
-                .rowId(rows)
                 .createdAt(Timestamp.from(Instant.now()))
                 .build();
     }

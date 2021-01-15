@@ -26,11 +26,13 @@ public class Scenario implements EntityInterface {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "scenario_id")
     private Long id;
 
     @Column(name = "name")
     private String scenarioName;
+
+    @Column(name = "uniqueId")
+    private String uniqueId;
 
     @Column(name = "descriptions")
     private String scenarioDescriptions;
@@ -76,7 +78,7 @@ public class Scenario implements EntityInterface {
     private String stepsStatus;
 
     @Column(name = "duration")
-    private Long duration;
+    private String duration;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -90,9 +92,13 @@ public class Scenario implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Embedding> embeddings;
 
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Row> rowId;
+
     public static Scenario createScenario(Feature feature,String beforeStatus,
                                           String afterStatus,
-                                          Long duration,
+                                          String duration,
                                           String keyword,
                                           Integer scenarioLine,
                                           String scenarioDesc,
@@ -100,7 +106,8 @@ public class Scenario implements EntityInterface {
                                           String status,
                                           LocalDateTime startTime,
                                           String stepsStatus,
-                                          String type) {
+                                          String type,
+                                          String uniqueId) {
 
         return build(feature,beforeStatus,
                 afterStatus,
@@ -112,14 +119,15 @@ public class Scenario implements EntityInterface {
                 status,
                 startTime,
                 stepsStatus,
-                type);
+                type,
+                uniqueId);
     }
 
     private static Scenario build(
             Feature feature,
             String beforeStatus,
             String afterStatus,
-            Long duration,
+            String duration,
             String keyword,
             Integer scenarioLine,
             String scenarioDesc,
@@ -127,7 +135,8 @@ public class Scenario implements EntityInterface {
             String status,
             LocalDateTime startTime,
             String stepsStatus,
-            String type
+            String type,
+            String uniqueId
     ) {
 
         return Scenario.builder()
@@ -144,6 +153,7 @@ public class Scenario implements EntityInterface {
                 .startTime(startTime)
                 .stepsStatus(stepsStatus)
                 .type(type)
+                .uniqueId(uniqueId)
                 .build();
     }
 

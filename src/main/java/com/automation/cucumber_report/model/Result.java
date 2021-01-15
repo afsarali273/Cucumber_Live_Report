@@ -1,7 +1,9 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,13 +15,14 @@ import java.sql.Timestamp;
 @SuperBuilder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "result")
 public class Result implements EntityInterface {
 
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "result_id")
     private Long id;
 
     @Column(name = "status")
@@ -38,7 +41,7 @@ public class Result implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
     private Feature feature;
 
@@ -50,9 +53,9 @@ public class Result implements EntityInterface {
     @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
     private Steps steps;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "hook_entity_id",nullable = true, updatable = true, insertable = true)
-    private Hook hook;
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "hook_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Hook hook;
 
 
     public static Result createResult(String status, Long duration, String errorMessage) {
@@ -94,18 +97,17 @@ public class Result implements EntityInterface {
         return Result.builder()
                 .scenario(scenario)
                 .status(status)
-                .hook(hook)
+                //.hook(hook)
                 .type(type)
                 .duration(duration)
                 .errorMessage(errorMessage)
                 .build();
     }
 
-    public static Result build(Steps steps,Hook hook,String type,String status, Long duration, String errorMessage) {
+    public static Result build(Steps steps,String type,String status, Long duration, String errorMessage) {
         return Result.builder()
                 .steps(steps)
                 .status(status)
-                .hook(hook)
                 .type(type)
                 .duration(duration)
                 .errorMessage(errorMessage)

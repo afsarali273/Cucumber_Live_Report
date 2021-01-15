@@ -21,7 +21,7 @@ public class TestRestController {
 
     @GetMapping
     public String check() throws NoSuchFieldException, IllegalAccessException {
-        Set<Feature> featureList = cucumberReporterService.getFeaturesList();
+        List<Feature> featureList = cucumberReporterService.getFeaturesList();
 
     //  featureList.stream().forEach( x-> Arrays.stream(x.getElements()).count());
         return "Welcome Afsar";

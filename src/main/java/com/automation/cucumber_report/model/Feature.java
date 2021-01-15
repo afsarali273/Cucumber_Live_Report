@@ -50,9 +50,13 @@ public class Feature implements EntityInterface {
             cascade = CascadeType.ALL)
     private List<Tag> tags;
 
+    @OneToOne(mappedBy = "feature", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Result results;
+
     @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Result> results;
+    private List<Row> rowId;
 
     @Column(name = "status")
     private String featureStatus;

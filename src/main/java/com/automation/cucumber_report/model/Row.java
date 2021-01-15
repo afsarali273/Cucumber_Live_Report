@@ -31,11 +31,19 @@ public class Row implements EntityInterface{
     @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
     private Steps steps;
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+    private Scenario scenario;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
+    private Feature feature;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
 
-    public static Row createRow(Steps steps,List<Cell>cells){
-       return Row.builder().steps(steps).cells(cells).build();
+    public static Row createRow(Steps steps,Scenario scenario,Feature feature){
+       return Row.builder().feature(feature).scenario(scenario).steps(steps).build();
     }
 }

@@ -1,7 +1,9 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +17,8 @@ import java.util.List;
 @SuperBuilder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "hook")
 public class Hook implements EntityInterface{
 
@@ -46,9 +50,9 @@ public class Hook implements EntityInterface{
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
     private Scenario scenario;
 
-    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Result> results;
+//    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Result> results;
 
     public static Hook createHook(Scenario scenario,String hookType,String result){
 
