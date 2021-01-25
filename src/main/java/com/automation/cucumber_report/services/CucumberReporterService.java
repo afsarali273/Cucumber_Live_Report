@@ -83,7 +83,6 @@ public class CucumberReporterService {
 
         features.stream().forEach( feature -> {
 
-            //Create
             com.automation.cucumber_report.model.Feature feature1 = com.automation.cucumber_report.model.Feature.createFeature(
                     feature.getDescription(),
                     feature.getKeyword(),
@@ -93,13 +92,13 @@ public class CucumberReporterService {
                     getFeatureStatus(feature.getElements()),
                     feature.getUri());
 
+            List<Scenario> scenarioList = new ArrayList<>();
             //Create Scenario
             Arrays.asList(feature.getElements()).stream().forEach(scenario -> {
 
-                //Steps
-                List<Steps> steps = new ArrayList<>();
-
-             Scenario scenario1=   Scenario.createScenario(feature1,
+            //Steps
+             Scenario scenario1=   Scenario.createScenario(
+                        feature1,
                         getScenarioStatus("before",scenario),
                         getScenarioStatus("after",scenario),
                         ""+getScenarioDuration(scenario),
@@ -113,14 +112,17 @@ public class CucumberReporterService {
                         Utils.checkIfNullReturnEmpty(scenario.getType()),
                         scenario.getId());
 
-               getTags(scenario1,scenario);
+             List<Steps> steps = getStepsList(scenario1,scenario);
+               //getTags(scenario1,scenario);
                //getHooks(scenario1,scenario);
-               getStepsList(scenario1,scenario);
-
+                scenario1.setSteps(steps);
+                scenarioList.add(scenario1);
 
             });
-            //scenarioRepo.saveAll(scenarios);
-            getTags(feature1,feature);
+            //Create
+
+            feature1.setScenarios(scenarioList);
+            //getTags(feature1,feature);
             featureList.add(feature1);
         });
         featureRepo.saveAll(featureList);
@@ -166,24 +168,24 @@ public class CucumberReporterService {
 
     }
 
-    public List<Steps> getStepsList(Scenario scenarios,Element scenario){
+    public List<Steps> getStepsList(Scenario scenario1,Element scenario){
         List<Steps> stepsList = new ArrayList<>();
         Arrays.asList(scenario.getSteps()).stream().forEach( step -> {
 
-         getStep(scenarios,step);
+            stepsList.add(getStep(scenario1,step));
         });
         return stepsList;
     }
 
 
-    public  Steps getStep(Scenario scenario,Step step){
-       Steps steps =  Steps.createStep(scenario,Utils.checkIfNullReturnEmpty(step.getKeyword()),
+    public  Steps getStep(Scenario scenario1,Step step){
+       Steps steps =  Steps.createStep(scenario1,Utils.checkIfNullReturnEmpty(step.getKeyword()),
                 step.getLine(),
                Utils.checkIfNullReturnEmpty(step.getName()));
         //getResult(steps,step.getResult().getDuration(),step.getResult().getStatus().getLabel(),step.getResult().getErrorMessage());
-        getRows(scenario.getFeature(),scenario,steps,step);
+        List<Row> rows =  getRows(steps,step);
+        steps.setRows(rows);
         //getEmbedding(steps,step);
-        stepsRepo.save(steps);
         return steps;
     }
 
@@ -217,13 +219,14 @@ public class CucumberReporterService {
         return embeddingList;
     }
 
-    public  List<com.automation.cucumber_report.model.Row> getRows(com.automation.cucumber_report.model.Feature feature,Scenario scenario, Steps steps, Step step){
+    public  List<com.automation.cucumber_report.model.Row> getRows(Steps steps, Step step){
         List<com.automation.cucumber_report.model.Row> rowList = new ArrayList<>();
         Arrays.asList(step.getRows()).stream().forEach(row -> {
-          Row row1 = com.automation.cucumber_report.model.Row.createRow(steps,scenario,feature);
-          getCells(row1,row);
+          Row row1 = com.automation.cucumber_report.model.Row.createRow(steps);
+          List<Cell> cells = getCells(row1,row);
+          row1.setCells(cells);
+          rowList.add(row1);
         });
-        //rowRepo.saveAll(rowList);
         return rowList;
     }
 
@@ -233,7 +236,6 @@ public class CucumberReporterService {
         Arrays.asList(row.getCells()).stream().forEach(cells->{
                 cellList.add(Cell.createCell(rows,Utils.checkIfNullReturnEmpty(cells)));
         });
-        cellRepo.saveAll(cellList);
         return cellList;
     }
 

@@ -43,15 +43,15 @@ public class Steps implements EntityInterface {
 
     @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Row> rowId;
+    private List<Row> rows;
 
-    @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Embedding> embeddings;
+//    @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Embedding> embeddings;
 
-    @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Result> results;
+//    @OneToMany(mappedBy = "steps", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Result> results;
 
 //    private final Argument[] arguments = new Argument[0];
 //    private final Match match = null;
@@ -64,6 +64,7 @@ public class Steps implements EntityInterface {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+    @JsonIgnore
     private Scenario scenario;
 
     public static Steps createStep(Scenario scenario,String keyword,

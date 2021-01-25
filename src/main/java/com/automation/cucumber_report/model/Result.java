@@ -41,17 +41,17 @@ public class Result implements EntityInterface {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
-    private Feature feature;
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
-    private Scenario scenario;
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
-    private Steps steps;
+//    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Feature feature;
+//
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Scenario scenario;
+//
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Steps steps;
 
 //    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
 //    @JoinColumn(name = "hook_entity_id",nullable = true, updatable = true, insertable = true)
@@ -72,8 +72,8 @@ public class Result implements EntityInterface {
 
     public static Result build(Feature feature,Scenario scenario,String status, Long duration, String errorMessage) {
         return Result.builder()
-                .feature(feature)
-                .scenario(scenario)
+               // .feature(feature)
+               // .scenario(scenario)
                 .type("SCENARIO")
                 .status(status)
                 .duration(duration)
@@ -83,10 +83,10 @@ public class Result implements EntityInterface {
 
     public static Result build(Feature feature,Scenario scenario,Steps steps,String status, Long duration, String errorMessage) {
         return Result.builder()
-                .feature(feature)
-                .scenario(scenario)
+                //.feature(feature)
+                //.scenario(scenario)
                 .status(status)
-                .steps(steps)
+                //.steps(steps)
                 .type("STEPS")
                 .duration(duration)
                 .errorMessage(errorMessage)
@@ -95,7 +95,7 @@ public class Result implements EntityInterface {
 
     public static Result build(Scenario scenario,Hook hook,String type,String status, Long duration, String errorMessage) {
         return Result.builder()
-                .scenario(scenario)
+               // .scenario(scenario)
                 .status(status)
                 //.hook(hook)
                 .type(type)
@@ -106,7 +106,7 @@ public class Result implements EntityInterface {
 
     public static Result build(Steps steps,String type,String status, Long duration, String errorMessage) {
         return Result.builder()
-                .steps(steps)
+               // .steps(steps)
                 .status(status)
                 .type(type)
                 .duration(duration)
@@ -116,7 +116,7 @@ public class Result implements EntityInterface {
 
     private static Result build(Feature feature,String status, Long duration, String errorMessage) {
         return Result.builder()
-                .feature(feature)
+                //.feature(feature)
                 .status(status)
                 .duration(duration)
                 .type("FEATURE")

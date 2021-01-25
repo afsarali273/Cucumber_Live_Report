@@ -48,10 +48,10 @@ public class Embedding implements EntityInterface{
 //    @JoinColumn(name = "hook_entity_id",nullable = true, updatable = true, insertable = true)
 //    Hook hook;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
-    private Steps steps;
-
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "step_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Steps steps;
+//
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
     private Scenario scenario;
@@ -59,7 +59,7 @@ public class Embedding implements EntityInterface{
     public static Embedding createEmbedding(Steps steps,String data,String fileId,String mimeType,String name){
 
         return Embedding.builder()
-                .steps(steps)
+                //.steps(steps)
                 //.hook(hook)
                 .data(data)
                 .fileId(fileId)
@@ -71,7 +71,7 @@ public class Embedding implements EntityInterface{
     public static Embedding createEmbedding(Hook hook,Scenario scenario,String data,String fileId,String mimeType,String name){
 
         return Embedding.builder()
-                .scenario(scenario)
+                //.scenario(scenario)
                 //.hook(hook)
                 .data(data)
                 .fileId(fileId)

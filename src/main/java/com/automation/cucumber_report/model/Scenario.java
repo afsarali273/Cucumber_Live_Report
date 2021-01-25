@@ -49,22 +49,6 @@ public class Scenario implements EntityInterface {
     @Column(name = "start_timestamp")
     private LocalDateTime startTime;
 
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Hook> hooks;
-
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Steps> steps;
-
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Tag> tags;
-
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Result> results;
-
     @Column(name = "scenario_status")
     private String scenarioStatus;
 
@@ -86,17 +70,35 @@ public class Scenario implements EntityInterface {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
+    @JsonIgnore
     private Feature feature;
 
-    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Embedding> embeddings;
+    //    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Hook> hooks;
 
     @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Row> rowId;
+    private List<Steps> steps;
+//
+//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Tag> tags;
 
-    public static Scenario createScenario(Feature feature,String beforeStatus,
+//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Result> results;
+
+//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Embedding> embeddings;
+
+//    @OneToMany(mappedBy = "scenario", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Row> rows;
+
+    public static Scenario createScenario(Feature feature,
+                                          String beforeStatus,
                                           String afterStatus,
                                           String duration,
                                           String keyword,

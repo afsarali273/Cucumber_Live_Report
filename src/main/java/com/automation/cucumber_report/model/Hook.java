@@ -46,9 +46,9 @@ public class Hook implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
-    private Scenario scenario;
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Scenario scenario;
 
 //    @OneToMany(mappedBy = "hook", fetch = FetchType.LAZY,
 //            cascade = CascadeType.ALL)
@@ -60,7 +60,7 @@ public class Hook implements EntityInterface{
     }
     private static Hook build(Scenario scenario,String hookType,String result){
         return Hook.builder()
-                .scenario(scenario)
+                //.scenario(scenario)
                 .hookType(hookType)
                 .result(result)
                 .build();

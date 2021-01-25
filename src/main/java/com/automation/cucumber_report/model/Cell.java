@@ -1,40 +1,38 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @SuperBuilder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cells")
 public class Cell implements EntityInterface{
 
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "cell_id")
     private Long id;
 
     @Column(name = "column_value")
     private String cells;
 
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private Timestamp createdAt;
-
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "row_entity_id",nullable = true, updatable = true, insertable = true)
-    Row row;
+    @JsonIgnore
+    Row rows;
 
     public static Cell createCell(Row row,String cellsValue){
-        return Cell.builder().row(row).cells(cellsValue).build();
+        return Cell.builder().rows(row).cells(cellsValue).build();
 
     }
 }

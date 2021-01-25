@@ -1,7 +1,9 @@
 package com.automation.cucumber_report.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,8 @@ import java.sql.Timestamp;
 @SuperBuilder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tag")
 public class Tag implements EntityInterface{
 
@@ -32,20 +36,20 @@ public class Tag implements EntityInterface{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
-    private Scenario scenario;
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
-    private Feature feature;
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "scenario_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Scenario scenario;
+//
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "feature_entity_id",nullable = true, updatable = true, insertable = true)
+//    private Feature feature;
 
     public static Tag createTags(Scenario scenario,String type,String tagName){
         return Tag.builder()
                 .name(tagName)
                 .type(type)
-                .scenario(scenario)
-                .feature(scenario.getFeature())
+                //.scenario(scenario)
+                //.feature(scenario.getFeature())
                 .build();
     }
 
@@ -53,7 +57,7 @@ public class Tag implements EntityInterface{
         return Tag.builder()
                 .name(tagName)
                 .type(type)
-                .feature(feature)
+                //.feature(feature)
                 .build();
     }
 
