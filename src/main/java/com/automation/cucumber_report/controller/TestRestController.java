@@ -21,15 +21,16 @@ public class TestRestController {
 
     @GetMapping
     public String check() throws NoSuchFieldException, IllegalAccessException {
-        List<Feature> featureList = cucumberReporterService.getFeaturesList();
-
-    //  featureList.stream().forEach( x-> Arrays.stream(x.getElements()).count());
-        return "Welcome Afsar";
-    }
-
+        cucumberReporterService.getFeaturesList();
+        return "Welcome Afsar"; }
 
     @GetMapping(produces= MediaType.APPLICATION_JSON_VALUE,path = "/features")
     public List<Feature> getFeatureList(){
         return dashboardService.getFeatureList();
+    }
+
+    @GetMapping(produces= MediaType.APPLICATION_JSON_VALUE,path = "/features/get-latest")
+    public List<Feature> getFirstFeatureOnly(){
+        return dashboardService.getFeatureList().subList(0,2);
     }
 }
