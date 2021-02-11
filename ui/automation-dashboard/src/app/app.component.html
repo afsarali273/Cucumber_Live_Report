@@ -1,4 +1,64 @@
-<h1> This is Afsar Ali</h1>
+
+<h1 style="padding-left: 10rem; margin-top: 10px;"> Dashboard !!</h1>
+
+<div class="row">
+    <div class="col-8 border-right">
+        <div class="table-main">
+    <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Feature</th>
+                <th scope="col">Feature Description</th>
+                <th scope="col">Line #</th>
+                <th scope="col">Status</th>
+                <th scope="col">Duration</th>
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let feat of listFeatures; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td> {{feat.featureUri}}</td>
+                <td> {{feat.featureName}}</td>
+                <td> {{feat.featureLineNumber}}</td>
+                <td class="status">
+                    {{feat.featureStatus}}
+                </td>
+                <td> {{feat.duration}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+    <div class="col-4 border-right">
+        <div class="scenarioSection">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Scenario Description</th>
+                <th scope="col">Line #</th>
+                <th scope="col">Status</th>
+                <th scope="col">Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+</div>
+
+
 
 
 
