@@ -23,7 +23,6 @@ import java.util.List;
 @Table(name = "scenario")
 public class Scenario implements EntityInterface {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

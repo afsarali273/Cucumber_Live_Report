@@ -21,10 +21,9 @@ import java.util.List;
 @Table(name = "feature")
 public class Feature implements EntityInterface {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "name")
     private String featureName;
@@ -42,6 +41,7 @@ public class Feature implements EntityInterface {
     private Integer featureLineNumber;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Scenario> scenarios;

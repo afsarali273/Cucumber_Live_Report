@@ -18,7 +18,6 @@ import javax.persistence.*;
 @Table(name = "cells")
 public class Cell implements EntityInterface{
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

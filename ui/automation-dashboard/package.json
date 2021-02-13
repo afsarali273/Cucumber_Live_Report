@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
     "@types/jquery": "^3.5.5",
     "bootstrap": "^4.5.0",
+    "highcharts": "^9.0.0",
     "jquery": "^3.5.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

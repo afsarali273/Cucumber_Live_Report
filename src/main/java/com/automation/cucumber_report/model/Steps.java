@@ -23,7 +23,6 @@ import java.util.List;
 @Getter
 public class Steps implements EntityInterface {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    // @Column(name = "steps_id")

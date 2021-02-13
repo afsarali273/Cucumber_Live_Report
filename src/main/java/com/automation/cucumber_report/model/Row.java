@@ -21,7 +21,6 @@ import java.util.List;
 @Table(name = "datatable_rows")
 public class Row implements EntityInterface{
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

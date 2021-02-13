@@ -22,7 +22,6 @@ import java.sql.Timestamp;
 @Table(name = "embedding")
 public class Embedding implements EntityInterface{
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(name = "embedding_id")

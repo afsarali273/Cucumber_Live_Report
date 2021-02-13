@@ -22,7 +22,6 @@ import java.util.List;
 @Table(name = "hook")
 public class Hook implements EntityInterface{
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    // @Column(name = "hook_id")

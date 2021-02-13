@@ -20,7 +20,6 @@ import java.sql.Timestamp;
 @Table(name = "result")
 public class Result implements EntityInterface {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
