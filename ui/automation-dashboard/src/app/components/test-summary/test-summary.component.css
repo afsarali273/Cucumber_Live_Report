@@ -1,0 +1,162 @@
+.container-fluid {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.failed {
+  background-color: #f2928c;
+}
+
+.indention {
+  padding-left: 3px;
+}
+
+.keyword {
+  font-weight: bold;
+}
+
+.description {
+  font-style: italic;
+  background-color: beige;
+  white-space: pre;
+  justify-content: center;
+  word-wrap: break-word;
+}
+
+.inner-level {
+  margin-top: 5px;
+  margin-left: 20px;
+  padding-bottom: 2px;
+  padding-left: 1px;
+}
+.element,
+.steps,
+.hooks-after,
+.hooks-before {
+  box-shadow: -1px 0 lightgrey;
+  transition: box-shadow 0.3s;
+}
+.element {
+  margin-bottom: 15px;
+  padding-left: 3px;
+}
+
+div {
+  display: block;
+}
+
+.lead-duration {
+  float: right;
+  padding-right: 15px;
+}
+
+.collapsable-control {
+  cursor: pointer;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-fw {
+  width: 1.28571429em;
+  text-align: center;
+}
+
+.collapsed .chevron:after {
+  content: "\f054";
+}
+
+.collapse.in {
+  display: block;
+}
+
+.collapsable-control {
+  cursor: pointer;
+}
+
+.step-name-Given {
+  margin-top: 5px;
+}
+
+.passed {
+  background-color: #92dd96;
+}
+
+.skipped {
+  background-color: #8af;
+}
+
+.name {
+  padding-left: 10px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-color: grey;
+  text-indent: initial;
+  display: table;
+  background-color: transparent;
+}
+
+table.step-arguments {
+  margin-bottom: 5px;
+  margin-left: 25px;
+  margin-top: 3px;
+}
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+table.step-arguments th,
+table.step-arguments td {
+  border: 1px solid gray;
+  padding: 3px;
+  text-align: left;
+}
+.message,
+.output,
+.embedding {
+  background-color: #dfdfdf;
+  overflow: auto;
+}
+a {
+  color: #0097da;
+}
+
+pre {
+  margin: 10px;
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

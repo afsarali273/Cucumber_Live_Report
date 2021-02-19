@@ -1,0 +1,253 @@
+<p>test-summary works!</p>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 ml-5">
+      <div *ngFor="let feat of listFeatures">
+        <div class="feature">
+          <!-- <div class="brief failed">
+                <span class="keyword indention">Feature</span>
+                <span class="name">{{ feat.featureName }}</span>
+              </div>
+              <div class="description indention">
+                As a Bookkeeper,I want to retrieve data from Database and
+                validate to report it to my Bookkeeping Manager
+              </div> -->
+          <div class="card mt-2">
+            <h6 class="card-header pb-1 pt-1 failed">
+              <span class="keyword indention">Feature:</span>
+              {{ feat.featureName }}
+            </h6>
+            <div class="card-body pb-0 pt-0">
+              <p class="card-text mt-0 mb-0">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <div class="row">
+                <span
+                  class="col-4 text-left font-weight-bold"
+                  style="background-color: white; font-family: 'Arial Narrow'"
+                >
+                  Scenarios:
+                </span>
+
+                <span
+                  class="badge badge-secondary badge-pill"
+                  style="font-size: 13px"
+                  >100k</span
+                >
+
+                <span
+                  class="col-4 text-left font-weight-bold"
+                  style="background-color: white; font-family: 'Arial Narrow'"
+                >
+                  Passed:
+                </span>
+
+                <span
+                  class="badge badge-success badge-pill"
+                  style="font-size: 13px"
+                  >10</span
+                >
+                <span
+                  class="col-4 text-left font-weight-bold"
+                  style="background-color: white; font-family: 'Arial Narrow'"
+                >
+                  Failed:
+                </span>
+
+                <span
+                  class="badge badge-danger badge-pill"
+                  style="font-size: 13px"
+                  >10</span
+                >
+                <span
+                  class="col-4 text-left font-weight-bold"
+                  style="background-color: white; font-family: 'Arial Narrow'"
+                >
+                  Skipped:
+                </span>
+
+                <span
+                  class="badge badge-warning badge-pill"
+                  style="font-size: 13px"
+                  >10</span
+                >
+              </div>
+
+              <div>
+                <button
+                  class="center"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseExample"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  style="
+                    margin-left: 50%;
+                    background-color: white;
+                    border: none;
+                  "
+                >
+                  <i class="fa fa-angle-double-down"></i>
+                </button>
+
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                    <div class="element">
+                      <div class="tags indention">
+                        <span class="lead-duration duration">1.750</span>
+                        <span
+                          data-toggle="collapse"
+                          class="collapsable-control collapsed"
+                          data-target="#element-1"
+                          aria-expanded="false"
+                        >
+                          <div class="brief failed">
+                            <span class="keyword indention">Scenario</span>
+                            <span class="name"
+                              >TC-001 Get list of working hero's from
+                              Database</span
+                            >
+
+                            <i class="chevron fa fa-fw"></i>
+                          </div>
+                        </span>
+                        <div class="description indention"></div>
+                        <div
+                          id="element-1"
+                          class="collapsable-details collapse"
+                          aria-expanded="false"
+                          style="height: 0px"
+                        >
+                          <div class="steps inner-level">
+                            <div
+                              data-toggle="collapse"
+                              class="collapsable-control"
+                              data-target="#steps-2"
+                            >
+                              <div class="brief failed">
+                                <span class="keyword indention">Steps</span>
+                                <span class="name"></span>
+
+                                <i class="chevron fa fa-fw"></i>
+                              </div>
+                            </div>
+
+                            <div
+                              id="steps-2"
+                              class="inner-level collapse collapsable-details in"
+                            >
+                              <div class="step">
+                                <div class="brief step-name-Given passed">
+                                  <span class="keyword indention">Given</span>
+                                  <span class="name"
+                                    >I set Headers for request</span
+                                  >
+
+                                  <span class="lead-duration duration"
+                                    >0.889</span
+                                  >
+                                </div>
+
+                                <table class="step-arguments">
+                                  <tbody>
+                                    <tr>
+                                      <td>KEY</td>
+                                      <td>VALUE</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Content-Type</td>
+                                      <td>application/json</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="step">
+                                <div class="brief step-name-When passed">
+                                  <span class="keyword indention">When</span>
+                                  <span class="name"
+                                    >I send GET request to
+                                    <span class="argument"
+                                      >"calculator/taxRelief"</span
+                                    ></span
+                                  >
+
+                                  <span class="lead-duration duration"
+                                    >0.803</span
+                                  >
+                                </div>
+                              </div>
+                              <div class="step">
+                                <div class="brief step-name-Then failed">
+                                  <span class="keyword indention">Then</span>
+                                  <span class="name"
+                                    >The status code is
+                                    <span class="argument">200</span></span
+                                  >
+
+                                  <span class="lead-duration duration"
+                                    >0.058</span
+                                  >
+                                </div>
+
+                                <div class="inner-level">
+                                  <div class="message indention">
+                                    <div
+                                      data-toggle="collapse"
+                                      class="collapsable-control"
+                                      data-target="#msg-3"
+                                    >
+                                      <a>java.lang.AssertionError:</a>
+                                    </div>
+                                    <div
+                                      id="msg-3"
+                                      class="collapse collapsable-details in"
+                                    >
+                                      <pre>
+java.lang.AssertionError: 1 expectation failed.
+Expected status code &lt;200&gt; but was &lt;404&gt;.
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+</pre
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="step">
+                                <div class="brief step-name-And skipped">
+                                  <span class="keyword indention">And</span>
+                                  <span class="name"
+                                    >I shall get a list consist of
+                                    <span class="argument">"natid"</span>,<span
+                                      class="argument"
+                                      >"name"</span
+                                    >
+                                    and
+                                    <span class="argument">"relief"</span></span
+                                  >
+
+                                  <span class="lead-duration duration"
+                                    >0.000</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Of Scfenarios -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
